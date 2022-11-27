@@ -7,7 +7,31 @@
 {% block body %}
 
 <h1>Agro cycle gan</h1>
+
+
+
 <h2>Train</h2>
+
+<form action="/train" method="POST">
+
+    <label for="dataset">Dataset:</label>
+    <select name="dataset" id="dataset">
+        <option value="horse2zebra">horse2zebra</option>
+        <option value="soy_small2soy_big">soy_small2soy_big</option>
+        <option value="soy2corn">soy2corn</option>
+        <option value="over_corn2over_wheat">over_corn2over_wheat</option>
+    </select>
+    <br />
+
+    <label for="GET-name">Epochs</label>
+    <input id="GET-name" type="text" name="epochs" value="10">
+    <br />
+    <input type="submit" value="Train">
+</form>
+
+
+
 <h2>Generate</h2>
+
 
 {% endblock %}
