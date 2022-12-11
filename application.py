@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, request
 import subprocess
 
 app = Flask(__name__)
@@ -11,14 +11,24 @@ def application():
 
 @app.route("/train", methods=["GET", "POST"])
 def data():
+    dataset = request.form["dataset"]
+    epochs = request.form["epochs"]
+
     def inner():
+        process_list = [
+            "python",
+            "-u",
+            "agro_cycle_gan/train.py",
+            dataset,
+            "--num_epochs",
+            "2",
+            "--image_resize",
+            "64",
+            "64",
+        ]
+
         proc = subprocess.Popen(
-            [
-                "python",
-                "-u",
-                "train.py",
-            ],
-            shell=True,
+            process_list,
             stdout=subprocess.PIPE,
         )
 
