@@ -13,6 +13,16 @@ def application():
 def data():
     dataset = request.form["dataset"]
     epochs = request.form["epochs"]
+    resize_width = request.form["resize_width"]
+    resize_height = request.form["resize_height"]
+    batch_size = request.form["batch_size"]
+    generator = request.form["generator"]
+    discriminator = request.form["discriminator"]
+    tensorboard = request.form.get("tensorboard")
+    store_models = request.form.get("store_models")
+    metrics = request.form.get("metrics")
+    load_models = request.form.get("load_models")
+    download_datasets = request.form.get("download_datasets")
 
     def inner():
         process_list = [
@@ -21,11 +31,29 @@ def data():
             "agro_cycle_gan/train.py",
             dataset,
             "--num_epochs",
-            "2",
+            f"{epochs}",
             "--image_resize",
-            "64",
-            "64",
+            f"{resize_width}",
+            f"{resize_height}",
+            "--batch_size",
+            f"{batch_size}",
+            "--discriminator",
+            f"{discriminator}",
+            "--generator",
+            f"{generator}",
         ]
+
+        # Checkboxes
+        if tensorboard:
+            process_list.append("--tensorboard")
+        if store_models:
+            process_list.append("--store_models")
+        if metrics:
+            process_list.append("--metrics")
+        if load_models:
+            process_list.append("--load_models")
+        if download_datasets:
+            process_list.append("--download_datasets")
 
         proc = subprocess.Popen(
             process_list,
