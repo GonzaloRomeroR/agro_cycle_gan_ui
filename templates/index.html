@@ -7,72 +7,69 @@
 {% block body %}
 
 <h1>Agro cycle gan</h1>
-
-
+<br />
+<br />
 
 <h2>Train</h2>
-
 <form action="/train" method="POST">
 
-    <label for="dataset">Dataset:</label>
-    <select name="dataset" id="dataset">
-        <option value="horse2zebra">horse2zebra</option>
-        <option value="soy_small2soy_big">soy_small2soy_big</option>
-        <option value="soy2corn">soy2corn</option>
-        <option value="over_corn2over_wheat">over_corn2over_wheat</option>
-    </select>
-    <br />
+    <div class="grid-container">
+        <label for="dataset" class="grid-item">Dataset:</label>
+        <select name="dataset" class="grid-item" id="dataset">
+            <option value="horse2zebra">horse2zebra</option>
+            <option value="soy_small2soy_big">soy_small2soy_big</option>
+            <option value="soy2corn">soy2corn</option>
+            <option value="over_corn2over_wheat">over_corn2over_wheat</option>
+        </select>
 
-    <label for="GET-name">Epochs</label>
-    <input id="GET-name" type="text" name="epochs" value="10">
-    <br />
+        <label for="GET-name" class="grid-item">Epochs:</label>
+        <input id="GET-name" class="grid-item" type="text" name="epochs" value="10">
 
-    <label for="GET-name">Batch size</label>
-    <input id="GET-name" type="text" name="batch_size" value="5">
-    <br />
+        <label for="GET-name" class="grid-item">Batch size:</label>
+        <input id="GET-name" class="grid-item" type="text" name="batch_size" value="5">
 
-    <label for="GET-name">Custom discriminator</label>
-    <input id="GET-name" type="text" name="discriminator" value="">
-    <br />
+        <label for="GET-name" class="grid-item">Custom discriminator:</label>
+        <input id="GET-name" type="text" class="grid-item" name="discriminator" value="">
 
-    <label for="GET-name">Custom generator</label>
-    <input id="GET-name" type="text" name="generator" value="">
-    <br />
+        <label for="GET-name" class="grid-item">Custom generator:</label>
+        <input id="GET-name" class="grid-item" type="text" name="generator" value="">
 
-    <label for="GET-name">Image width resize</label>
-    <input id="GET-name" type="text" name="resize_width" value="64">
-    <br />
+        <label for="GET-name" class="grid-item">Image width resize:</label>
+        <input id="GET-name" class="grid-itemtype=" text" name="resize_width" value="64">
 
-    <label for="GET-name">Image height resize</label>
-    <input id="GET-name" type="text" name="resize_height" value="64">
-    <br />
+        <label for="GET-name" class="grid-item">Image height resize:</label>
+        <input id="GET-name" type="text" name="resize_height" value="64">
 
-    <label for="GET-name"> Enable tensorboard </label>
-    <input type="checkbox" id="GET-name" name="tensorboard">
-    <br>
+        <label for="GET-name" class="grid-item"> Enable tensorboard:</label>
+        <input type="checkbox" class="grid-item" id="GET-name" name="tensorboard">
 
-    <label for="GET-name"> Load models </label>
-    <input type="checkbox" id="GET-name" name="load_models">
-    <br>
+        <label for="GET-name" class="grid-item"> Load models:</label>
+        <input type="checkbox" id="GET-name" name="load_models">
 
-    <label for="GET-name"> Store models </label>
-    <input type="checkbox" id="GET-name" name="store_models">
-    <br>
+        <label for="GET-name" class="grid-item"> Store models:</label>
+        <input type="checkbox" id="GET-name" class="grid-item" name="store_models">
 
-    <label for="GET-name"> Calculate metrics </label>
-    <input type="checkbox" id="GET-name" name="metrics">
-    <br>
+        <label for="GET-name" class="grid-item"> Calculate metrics:</label>
+        <input type="checkbox" class="grid-item" id="GET-name" name="metrics">
 
-    <label for="GET-name"> Download datasets </label>
-    <input type="checkbox" id="GET-name" name="download_dataset">
-    <br>
+        <label for="GET-name" class="grid-item"> Download datasets:</label>
+        <input type="checkbox" class="grid-item" id="GET-name" name="download_dataset">
 
-    <input type="submit" value="Train">
+        <input type="submit" value="Train">
+    </div>
 </form>
 
-
+<br />
+<br />
 
 <h2>Generate</h2>
 
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 
 {% endblock %}
