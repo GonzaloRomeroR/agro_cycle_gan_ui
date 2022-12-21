@@ -10,7 +10,7 @@ def application():
 
 
 @app.route("/train", methods=["GET", "POST"])
-def data():
+def train():
     dataset = request.form["dataset"]
     epochs = request.form["epochs"]
     resize_width = request.form["resize_width"]
@@ -54,6 +54,44 @@ def data():
             process_list.append("--load_models")
         if download_datasets:
             process_list.append("--download_datasets")
+
+        proc = subprocess.Popen(
+            process_list,
+            stdout=subprocess.PIPE,
+        )
+
+        for line in iter(proc.stdout.readline, ""):
+            yield line.rstrip().decode("utf-8") + "<br/>\n"
+
+    return Response(
+        inner(), mimetype="text/html"
+    )  # text/html is required for most browsers to show
+
+
+@app.route("/generate", methods=["GET", "POST"])
+def generate():
+    generator = request.form["generator"]
+    images_path = request.form["images_path"]
+    dest_path = request.form["dest_path"]
+    dest_domain = request.form["dest_domain"]
+    image_resize_x = request.form["image_resize_x"]
+    dest_path = request.form["dest_path"]
+    image_resize_y = request.form["image_resize_y"]
+
+    def inner():
+        process_list = [
+            "python",
+            "-u",
+            images_path,
+            dest_path,
+            "--generator_name",
+            generator,
+            "--image_resize",
+            image_resize_x,
+            image_resize_y,
+            "--dest_domain",
+            dest_domain,
+        ]
 
         proc = subprocess.Popen(
             process_list,

@@ -24,3 +24,8 @@ htmlcov/
 .coverage
 .coverage.*
 *,cover
+
+
+# Others
+*.stackdump
+results/

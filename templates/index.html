@@ -35,7 +35,7 @@
         <input id="GET-name" class="grid-item" type="text" name="generator" value="">
 
         <label for="GET-name" class="grid-item">Image width resize:</label>
-        <input id="GET-name" class="grid-itemtype=" text" name="resize_width" value="64">
+        <input id="GET-name" class="grid-item" type="text" name="resize_width" value="64">
 
         <label for="GET-name" class="grid-item">Image height resize:</label>
         <input id="GET-name" type="text" name="resize_height" value="64">
@@ -64,12 +64,39 @@
 
 <h2>Generate</h2>
 
+<form action="/generate" method="POST">
+
+    <div class="grid-container">
+        <label for="dataset-generate" class="grid-item">Generator name:</label>
+        <select name="generator" class="grid-item" id="dataset">
+            <option value="horse2zebra">horse2zebra</option>
+            <option value="soy_small2soy_big">soy_small2soy_big</option>
+            <option value="soy2corn">soy2corn</option>
+            <option value="over_corn2over_wheat">over_corn2over_wheat</option>
+        </select>
+
+        <label for="GET-name" class="grid-item"> Image path:</label>
+        <input type="text" class="grid-item" id="GET-name" name="images_path">
+
+        <label for="GET-name" class="grid-item"> Destination path:</label>
+        <input type="text" class="grid-item" id="GET-name" name="dest_path">
+
+        <label for="GET-name" class="grid-item"> Destination domain:</label>
+        <input type="text" class="grid-item" id="GET-name" name="dest_domain">
+
+        <label for="GET-name" class="grid-item"> Image resize X:</label>
+        <input type="text" class="grid-item" id="GET-name" name="image_resize_x" value="64">
+
+        <label for="GET-name" class="grid-item"> Image resize Y:</label>
+        <input type="text" class="grid-item" id="GET-name" name="image_resize_y" value="64">
+
+        <input type="submit" value="Generate">
+    </div>
+</form>
 
 <br />
 <br />
 <br />
-<br />
-<br />
-<br />
+
 
 {% endblock %}
