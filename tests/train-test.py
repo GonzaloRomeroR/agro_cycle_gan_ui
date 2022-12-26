@@ -4,6 +4,11 @@ from typing import List
 sys.path.insert(0, "./agro_cycle_gan")
 from agro_cycle_gan.train import train, Config
 
+"""
+Check that it is possible to use the agro_cycle_gan submodule
+to train models from outside the platform
+"""
+
 
 def flask_train() -> None:
     train_model(

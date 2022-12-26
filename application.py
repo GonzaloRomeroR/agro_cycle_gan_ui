@@ -82,6 +82,7 @@ def generate():
         process_list = [
             "python",
             "-u",
+            "agro_cycle_gan/generate.py",
             images_path,
             dest_path,
             "--generator_name",

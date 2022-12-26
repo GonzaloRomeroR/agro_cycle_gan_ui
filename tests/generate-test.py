@@ -5,6 +5,12 @@ sys.path.insert(0, "./agro_cycle_gan")
 from agro_cycle_gan.generate import ImageTransformer
 
 
+"""
+Check that it is possible to use the agro_cycle_gan submodule
+to generate images from outside the platform
+"""
+
+
 def flask_generate() -> None:
     generate_images(
         origin_path="./images/horse2zebra/test_A/A",

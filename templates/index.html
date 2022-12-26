@@ -29,10 +29,15 @@
         <input id="GET-name" class="grid-item" type="text" name="batch_size" value="5">
 
         <label for="GET-name" class="grid-item">Custom discriminator:</label>
-        <input id="GET-name" type="text" class="grid-item" name="discriminator" value="">
+        <select name="discriminator" class="grid-item" id="dataset">
+            <option value="cyclegan">Cycle GAN</option>
+            <option value="mixer">Mixer</option>
+        </select>
 
         <label for="GET-name" class="grid-item">Custom generator:</label>
-        <input id="GET-name" class="grid-item" type="text" name="generator" value="">
+        <select name="generator" class="grid-item" id="dataset">
+            <option value="basic">Basic</option>
+        </select>
 
         <label for="GET-name" class="grid-item">Image width resize:</label>
         <input id="GET-name" class="grid-item" type="text" name="resize_width" value="64">
@@ -77,12 +82,16 @@
 
         <label for="GET-name" class="grid-item"> Image path:</label>
         <input type="text" class="grid-item" id="GET-name" name="images_path">
+        <!--<input type="file" name="dest_path" webkitdirectory directory multiple />-->
 
         <label for="GET-name" class="grid-item"> Destination path:</label>
         <input type="text" class="grid-item" id="GET-name" name="dest_path">
 
         <label for="GET-name" class="grid-item"> Destination domain:</label>
-        <input type="text" class="grid-item" id="GET-name" name="dest_domain">
+        <select name="dest_domain" class="grid-item" id="dataset">
+            <option value="A">A</option>
+            <option value="B">B</option>
+        </select>
 
         <label for="GET-name" class="grid-item"> Image resize X:</label>
         <input type="text" class="grid-item" id="GET-name" name="image_resize_x" value="64">
