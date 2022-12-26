@@ -100,6 +100,8 @@ def generate():
         )
 
         for line in iter(proc.stdout.readline, ""):
+            if proc.poll() is None:
+                return "Finished"
             yield line.rstrip().decode("utf-8") + "<br/>\n"
 
     return Response(
