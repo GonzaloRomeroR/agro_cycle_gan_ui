@@ -155,6 +155,12 @@ blockquote {
     grid-template-columns: 12em 10em;
 }
 
+.grid-container-carousel {
+    display: grid;
+    grid-template-columns: 30em 30em;
+    column-gap: 10px;
+}
+
 .grid-item {
     text-align: left;
 }

@@ -4,9 +4,15 @@ import subprocess
 app = Flask(__name__)
 
 
+generated_images = [
+    {"num": 0, "original": "n02391049_80.jpg", "generated": "n02391049_260.jpg"},
+    {"num": 1, "original": "n02391049_80.jpg", "generated": "n02391049_260.jpg"},
+]
+
+
 @app.route("/")
 def application():
-    return render_template("index.html")
+    return render_template("index.html", generated_images=generated_images)
 
 
 @app.route("/train", methods=["GET", "POST"])
