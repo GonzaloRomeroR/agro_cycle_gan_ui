@@ -1,18 +1,39 @@
 from flask import Flask, render_template, Response, request
 import subprocess
+import os
+from typing import Dict, Any, List
 
 app = Flask(__name__)
 
 
-generated_images = [
-    {"num": 0, "original": "n02391049_80.jpg", "generated": "n02391049_260.jpg"},
-    {"num": 1, "original": "n02391049_80.jpg", "generated": "n02391049_260.jpg"},
-]
+def get_generated_images() -> List[Dict[str, Any]]:
+    generated_images = []
+
+    generated_files = os.listdir("./static/generated/")
+    images_num = 0
+
+    for file in os.listdir("./static/original/"):
+
+        if (
+            not file.lower().endswith(
+                (".png", ".jpg", ".jpeg", ".tiff", ".bmp", ".gif")
+            )
+            or file not in generated_files
+        ):
+            continue
+
+        generated_images.append(
+            {"num": images_num, "original": file, "generated": file}
+        )
+        images_num += 1
+
+    return generated_images
 
 
 @app.route("/")
 def application():
-    return render_template("index.html", generated_images=generated_images)
+    print(get_generated_images())
+    return render_template("index.html", generated_images=get_generated_images())
 
 
 @app.route("/train", methods=["GET", "POST"])

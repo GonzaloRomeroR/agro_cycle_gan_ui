@@ -123,9 +123,9 @@
 
             <div class="{{'carousel-item active' if item.num == 0 else 'carousel-item'}}">
                 <div class="grid-container-carousel">
-                    <img class="d-block w-100" src="{{url_for('static', filename='pictures/' + item.original)}}"
+                    <img class="d-block w-100" src="{{url_for('static', filename='original/' + item.original)}}"
                         alt="First slide">
-                    <img class="d-block w-100" src="{{url_for('static', filename='pictures/' + item.generated)}}"
+                    <img class="d-block w-100" src="{{url_for('static', filename='generated/' + item.generated)}}"
                         alt="First slide">
                 </div>
             </div>
