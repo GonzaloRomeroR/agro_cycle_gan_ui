@@ -94,7 +94,7 @@
         <input type="text" class="grid-item" id="GET-name" name="images_path" value="./images_transform">
 
         <label for="GET-name" class="grid-item"> Destination path:</label>
-        <input type="text" class="grid-item" id="GET-name" name="dest_path" value="./output">
+        <input type="text" class="grid-item" id="GET-name" name="dest_path" value="./static/generated">
 
         <label for="GET-name" class="grid-item"> Destination domain:</label>
         <select name="dest_domain" class="grid-item" id="dataset">
@@ -114,6 +114,10 @@
 
 <br />
 <br />
+
+<form method="POST" action="/">
+    <input type="submit" value="Update images" name="update_carousel" />
+</form>
 
 <div class="container">
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">

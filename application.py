@@ -1,7 +1,12 @@
 from flask import Flask, render_template, Response, request
 import subprocess
 import os
+import shutil
 from typing import Dict, Any, List
+
+
+GEN_PATH = "./static/generated"
+ORIG_PATH = "./static/original"
 
 app = Flask(__name__)
 
@@ -30,9 +35,8 @@ def get_generated_images() -> List[Dict[str, Any]]:
     return generated_images
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def application():
-    print(get_generated_images())
     return render_template("index.html", generated_images=get_generated_images())
 
 
@@ -95,6 +99,18 @@ def train():
     )  # text/html is required for most browsers to show
 
 
+def clear_image_folders(path):
+    for file in os.listdir(path):
+        if file.lower().endswith((".png", ".jpg", ".jpeg", ".tiff", ".bmp", ".gif")):
+            os.remove(f"{path}/{file}")
+
+
+def copy_image_folder(src, dest):
+    for file in os.listdir(src):
+        if file.lower().endswith((".png", ".jpg", ".jpeg", ".tiff", ".bmp", ".gif")):
+            shutil.copyfile(f"{src}/{file}", f"{dest}/{file}")
+
+
 @app.route("/generate", methods=["GET", "POST"])
 def generate():
     generator = request.form["generator"]
@@ -104,6 +120,14 @@ def generate():
     image_resize_x = request.form["image_resize_x"]
     dest_path = request.form["dest_path"]
     image_resize_y = request.form["image_resize_y"]
+
+    # Clear image folders
+    if images_path != ORIG_PATH:
+        clear_image_folders(ORIG_PATH)
+    clear_image_folders(GEN_PATH)
+
+    # Copy files
+    copy_image_folder(images_path, ORIG_PATH)
 
     def inner():
         process_list = [
@@ -127,8 +151,6 @@ def generate():
         )
 
         for line in iter(proc.stdout.readline, ""):
-            if proc.poll() is None:
-                return "Finished"
             yield line.rstrip().decode("utf-8") + "<br/>\n"
 
     return Response(
