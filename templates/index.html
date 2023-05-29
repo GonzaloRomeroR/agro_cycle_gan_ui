@@ -42,11 +42,13 @@
         <select name="discriminator" class="grid-item" id="dataset">
             <option value="cyclegan">Cycle GAN</option>
             <option value="mixer">Mixer</option>
+            <option value="resnet">Resnet</option>
         </select>
 
         <label for="GET-name" class="grid-item">Custom generator:</label>
         <select name="generator" class="grid-item" id="dataset">
             <option value="basic">Basic</option>
+            <option value="nlayer">NLayer</option>
         </select>
 
         <label for="GET-name" class="grid-item">Image width resize:</label>
@@ -69,6 +71,18 @@
 
         <label for="GET-name" class="grid-item"> Download datasets:</label>
         <input type="checkbox" class="grid-item" id="GET-name" name="download_dataset">
+
+        <label for="GET-name" class="grid-item">Image crop width:</label>
+        <input id="GET-name" class="grid-item" type="text" name="crop_width" value="">
+
+        <label for="GET-name" class="grid-item">Image crop height:</label>
+        <input id="GET-name" type="text" name="crop_height" value="">
+
+
+        <label for="GET-name" class="grid-item">DB connection string:</label>
+        <input id="GET-name" class="grid-item" type="text" name="db_connection_str" value="">
+        <label for="GET-name" class="grid-item">Comments:</label>
+        <input id="GET-name" class="grid-item" type="text" name="comments" value="">
 
         <input type="submit" value="Train">
     </div>

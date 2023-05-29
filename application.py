@@ -40,8 +40,7 @@ def application():
     return render_template("index.html", generated_images=get_generated_images())
 
 
-@app.route("/train", methods=["GET", "POST"])
-def train():
+def get_process_command(request):
     dataset = request.form["dataset"]
     epochs = request.form["epochs"]
     resize_width = request.form["resize_width"]
@@ -54,38 +53,59 @@ def train():
     metrics = request.form.get("metrics")
     load_models = request.form.get("load_models")
     download_datasets = request.form.get("download_datasets")
+    comments = request.form["comments"]
+    db_connection_str = request.form["db_connection_str"]
+    crop_width = request.form["crop_width"]
+    crop_height = request.form["crop_height"]
+
+    process_list = [
+        "python",
+        "-u",
+        "agro_cycle_gan/train.py",
+        dataset,
+        "--num_epochs",
+        f"{epochs}",
+        "--image_resize",
+        f"{resize_width}",
+        f"{resize_height}",
+        "--batch_size",
+        f"{batch_size}",
+        "--discriminator",
+        f"{discriminator}",
+        "--generator",
+        f"{generator}",
+        "--comments",
+        f"{comments}",
+        "--db_connection_str",
+        f"{db_connection_str}",
+    ]
+
+    # Checkboxes
+    if tensorboard:
+        process_list.append("--tensorboard")
+    if store_models:
+        process_list.append("--store_models")
+    if metrics:
+        process_list.append("--metrics")
+    if load_models:
+        process_list.append("--load_models")
+    if download_datasets:
+        process_list.append("--download_datasets")
+
+    if crop_width and crop_height:
+        process_list.append("--crop_size")
+        process_list.append(f"{crop_width}")
+        process_list.append(f"{crop_height}")
+
+    return process_list
+
+
+@app.route("/train", methods=["GET", "POST"])
+def train():
+
+    process_list = get_process_command(request)
 
     def inner():
-        process_list = [
-            "python",
-            "-u",
-            "agro_cycle_gan/train.py",
-            dataset,
-            "--num_epochs",
-            f"{epochs}",
-            "--image_resize",
-            f"{resize_width}",
-            f"{resize_height}",
-            "--batch_size",
-            f"{batch_size}",
-            "--discriminator",
-            f"{discriminator}",
-            "--generator",
-            f"{generator}",
-        ]
-
-        # Checkboxes
-        if tensorboard:
-            process_list.append("--tensorboard")
-        if store_models:
-            process_list.append("--store_models")
-        if metrics:
-            process_list.append("--metrics")
-        if load_models:
-            process_list.append("--load_models")
-        if download_datasets:
-            process_list.append("--download_datasets")
-
         proc = subprocess.Popen(
             process_list,
             stdout=subprocess.PIPE,
