@@ -1,171 +1,175 @@
 {% extends 'base.html' %}
 
 {% block head %}
+
 <title>Agro cycle gan</title>
 {% endblock %}
 
 {% block body %}
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
 
 <h1>Agro cycle gan</h1>
-<br />
-<br />
-
-<h2>Train</h2>
-<form action="/train" method="POST">
-
-    <div class="grid-container">
-        <label for="dataset" class="grid-item">Dataset:</label>
-        <select name="dataset" class="grid-item" id="dataset">
-            <option value="horse2zebra">horse2zebra</option>
-            <option value="soy_small2soy_big">soy_small2soy_big</option>
-            <option value="soy2corn">soy2corn</option>
-            <option value="over_corn2over_wheat">over_corn2over_wheat</option>
-        </select>
-
-        <label for="GET-name" class="grid-item">Epochs:</label>
-        <input id="GET-name" class="grid-item" type="text" name="epochs" value="10">
-
-        <label for="GET-name" class="grid-item">Batch size:</label>
-        <input id="GET-name" class="grid-item" type="text" name="batch_size" value="5">
-
-        <label for="GET-name" class="grid-item">Custom discriminator:</label>
-        <select name="discriminator" class="grid-item" id="dataset">
-            <option value="cyclegan">Cycle GAN</option>
-            <option value="mixer">Mixer</option>
-            <option value="resnet">Resnet</option>
-        </select>
-
-        <label for="GET-name" class="grid-item">Custom generator:</label>
-        <select name="generator" class="grid-item" id="dataset">
-            <option value="basic">Basic</option>
-            <option value="nlayer">NLayer</option>
-        </select>
-
-        <label for="GET-name" class="grid-item">Image width resize:</label>
-        <input id="GET-name" class="grid-item" type="text" name="resize_width" value="64">
-
-        <label for="GET-name" class="grid-item">Image height resize:</label>
-        <input id="GET-name" type="text" name="resize_height" value="64">
-
-        <label for="GET-name" class="grid-item"> Enable tensorboard:</label>
-        <input type="checkbox" class="grid-item" id="GET-name" name="tensorboard">
-
-        <label for="GET-name" class="grid-item"> Load models:</label>
-        <input type="checkbox" id="GET-name" name="load_models">
-
-        <label for="GET-name" class="grid-item"> Store models:</label>
-        <input type="checkbox" id="GET-name" class="grid-item" name="store_models">
-
-        <label for="GET-name" class="grid-item"> Calculate metrics:</label>
-        <input type="checkbox" class="grid-item" id="GET-name" name="metrics">
-
-        <label for="GET-name" class="grid-item"> Download datasets:</label>
-        <input type="checkbox" class="grid-item" id="GET-name" name="download_dataset">
-
-        <label for="GET-name" class="grid-item">Image crop width:</label>
-        <input id="GET-name" class="grid-item" type="text" name="crop_width" value="">
-
-        <label for="GET-name" class="grid-item">Image crop height:</label>
-        <input id="GET-name" type="text" name="crop_height" value="">
-
-
-        <label for="GET-name" class="grid-item">DB connection string:</label>
-        <input id="GET-name" class="grid-item" type="text" name="db_connection_str" value="">
-        <label for="GET-name" class="grid-item">Comments:</label>
-        <input id="GET-name" class="grid-item" type="text" name="comments" value="">
-
-        <input type="submit" value="Train">
-    </div>
-</form>
-
-<br />
+<hr />
 <br />
 
-<h2>Generate</h2>
-
-<form action="/generate" method="POST">
-
-    <div class="grid-container">
-        <label for="dataset-generate" class="grid-item">Generator name:</label>
-        <select name="generator" class="grid-item" id="dataset">
-            <option value="horse2zebra">horse2zebra</option>
-            <option value="soy_small2soy_big">soy_small2soy_big</option>
-            <option value="soy2corn">soy2corn</option>
-            <option value="over_corn2over_wheat">over_corn2over_wheat</option>
-        </select>
-
-        <label for="GET-name" class="grid-item"> Image path:</label>
-        <input type="text" class="grid-item" id="GET-name" name="images_path" value="./images_transform">
-
-        <label for="GET-name" class="grid-item"> Destination path:</label>
-        <input type="text" class="grid-item" id="GET-name" name="dest_path" value="./static/generated">
-
-        <label for="GET-name" class="grid-item"> Destination domain:</label>
-        <select name="dest_domain" class="grid-item" id="dataset">
-            <option value="A">A</option>
-            <option value="B">B</option>
-        </select>
-
-        <label for="GET-name" class="grid-item"> Image resize X:</label>
-        <input type="text" class="grid-item" id="GET-name" name="image_resize_x" value="64">
-
-        <label for="GET-name" class="grid-item"> Image resize Y:</label>
-        <input type="text" class="grid-item" id="GET-name" name="image_resize_y" value="64">
-
-        <input type="submit" value="Generate">
-    </div>
-</form>
+<ul class="nav nav-pills mb-3 " id="process-tabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="generate-tab" data-toggle="pill" href="#generate" role="tab"
+            aria-controls="generate" aria-selected="true">Generate</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="train-tab" data-toggle="pill" href="#train" role="tab" aria-controls="train"
+            aria-selected="false">Train</a>
+    </li>
+</ul>
 
 <br />
-<br />
 
-<form method="POST" action="/">
-    <input type="submit" value="Update images" name="update_carousel" />
-</form>
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="generate" role="tabpanel" aria-labelledby="pills-wellnes-tab">
+        <h2>Generate</h2>
 
-<div class="container">
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
+        <form action="/generate" method="POST">
 
-            {% for item in generated_images%}
+            <div class="grid-container">
+                <label for="dataset-generate" class="grid-item">Generator name:</label>
+                <select name="generator" class="grid-item" id="dataset">
+                    <option value="horse2zebra">horse2zebra</option>
+                    <option value="soy_small2soy_big">soy_small2soy_big</option>
+                    <option value="soy2corn">soy2corn</option>
+                    <option value="over_corn2over_wheat">over_corn2over_wheat</option>
+                </select>
 
-            <div class="{{'carousel-item active' if item.num == 0 else 'carousel-item'}}">
-                <div class="grid-container-carousel">
-                    <img class="d-block w-100" src="{{url_for('static', filename='original/' + item.original)}}"
-                        alt="First slide">
-                    <img class="d-block w-100" src="{{url_for('static', filename='generated/' + item.generated)}}"
-                        alt="First slide">
-                </div>
+                <label for="GET-name" class="grid-item"> Image path:</label>
+                <input type="text" class="grid-item" id="GET-name" name="images_path" value="./images_transform">
+
+                <label for="GET-name" class="grid-item"> Destination path:</label>
+                <input type="text" class="grid-item" id="GET-name" name="dest_path" value="./static/generated">
+
+                <label for="GET-name" class="grid-item"> Destination domain:</label>
+                <select name="dest_domain" class="grid-item" id="dataset">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                </select>
+
+                <label for="GET-name" class="grid-item"> Image resize X:</label>
+                <input type="text" class="grid-item" id="GET-name" name="image_resize_x" value="64">
+
+                <label for="GET-name" class="grid-item"> Image resize Y:</label>
+                <input type="text" class="grid-item" id="GET-name" name="image_resize_y" value="64">
+
+                <input type="submit" value="Generate">
             </div>
+        </form>
 
-            {% endfor %}
+        <br />
+        <br />
 
+        <form method="POST" action="/">
+            <input type="submit" value="Update images" name="update_carousel" />
+        </form>
+
+        <div class="container">
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+
+                    {% for item in generated_images%}
+
+                    <div class="{{'carousel-item active' if item.num == 0 else 'carousel-item'}}">
+                        <div class="grid-container-carousel">
+                            <img class="d-block w-100" src="{{url_for('static', filename='original/' + item.original)}}"
+                                alt="First slide">
+                            <img class="d-block w-100"
+                                src="{{url_for('static', filename='generated/' + item.generated)}}" alt="First slide">
+                        </div>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
+        <br />
+    </div>
+    <div class="tab-pane fade" id="train" role="tabpanel" aria-labelledby="train-tab">
+        <h2>Train</h2>
+        <form action="/train" method="POST">
+
+            <div class="grid-container">
+                <label for="dataset" class="grid-item">Dataset:</label>
+                <select name="dataset" class="grid-item" id="dataset">
+                    <option value="horse2zebra">horse2zebra</option>
+                    <option value="soy_small2soy_big">soy_small2soy_big</option>
+                    <option value="soy2corn">soy2corn</option>
+                    <option value="over_corn2over_wheat">over_corn2over_wheat</option>
+                </select>
+
+                <label for="GET-name" class="grid-item">Epochs:</label>
+                <input id="GET-name" class="grid-item" type="text" name="epochs" value="10">
+
+                <label for="GET-name" class="grid-item">Batch size:</label>
+                <input id="GET-name" class="grid-item" type="text" name="batch_size" value="5">
+
+                <label for="GET-name" class="grid-item">Custom discriminator:</label>
+                <select name="discriminator" class="grid-item" id="dataset">
+                    <option value="cyclegan">Cycle GAN</option>
+                    <option value="mixer">Mixer</option>
+                    <option value="resnet">Resnet</option>
+                </select>
+
+                <label for="GET-name" class="grid-item">Custom generator:</label>
+                <select name="generator" class="grid-item" id="dataset">
+                    <option value="basic">Basic</option>
+                    <option value="nlayer">NLayer</option>
+                </select>
+
+                <label for="GET-name" class="grid-item">Image width resize:</label>
+                <input id="GET-name" class="grid-item" type="text" name="resize_width" value="64">
+
+                <label for="GET-name" class="grid-item">Image height resize:</label>
+                <input id="GET-name" type="text" name="resize_height" value="64">
+
+                <label for="GET-name" class="grid-item"> Enable tensorboard:</label>
+                <input type="checkbox" class="grid-item" id="GET-name" name="tensorboard">
+
+                <label for="GET-name" class="grid-item"> Load models:</label>
+                <input type="checkbox" id="GET-name" name="load_models">
+
+                <label for="GET-name" class="grid-item"> Store models:</label>
+                <input type="checkbox" id="GET-name" class="grid-item" name="store_models">
+
+                <label for="GET-name" class="grid-item"> Calculate metrics:</label>
+                <input type="checkbox" class="grid-item" id="GET-name" name="metrics">
+
+                <label for="GET-name" class="grid-item"> Download datasets:</label>
+                <input type="checkbox" class="grid-item" id="GET-name" name="download_dataset">
+
+                <label for="GET-name" class="grid-item">Image crop width:</label>
+                <input id="GET-name" class="grid-item" type="text" name="crop_width" value="">
+
+                <label for="GET-name" class="grid-item">Image crop height:</label>
+                <input id="GET-name" type="text" name="crop_height" value="">
+
+
+                <label for="GET-name" class="grid-item">DB connection string:</label>
+                <input id="GET-name" class="grid-item" type="text" name="db_connection_str" value="">
+                <label for="GET-name" class="grid-item">Comments:</label>
+                <input id="GET-name" class="grid-item" type="text" name="comments" value="">
+
+                <input type="submit" value="Train">
+            </div>
+        </form>
+        <br />
     </div>
 </div>
-
-
-<br />
-<br />
-<br />
 
 
 {% endblock %}
