@@ -2,13 +2,20 @@ from flask import Flask, render_template, Response, request
 import subprocess
 import os
 import shutil
+import json
+import threading
+
 from typing import Dict, Any, List
+
+from flask_socketio import SocketIO
 
 
 GEN_PATH = "./static/generated"
 ORIG_PATH = "./static/original"
 
 app = Flask(__name__)
+
+socketio = SocketIO(app)
 
 
 def get_generated_images() -> List[Dict[str, Any]]:
@@ -129,6 +136,45 @@ def copy_image_folder(src, dest):
     for file in os.listdir(src):
         if file.lower().endswith((".png", ".jpg", ".jpeg", ".tiff", ".bmp", ".gif")):
             shutil.copyfile(f"{src}/{file}", f"{dest}/{file}")
+
+
+def run_subprocess(process_list):
+    with subprocess.Popen(process_list, stdout=subprocess.PIPE, text=True) as process:
+        for line in process.stdout:
+            socketio.emit("output", {"data": line})
+        process.wait()
+
+
+@socketio.on("run_process")
+def handle_run_process(data):
+
+    values = data["data"]
+    generator = data["data"].get("generator", "")
+    images_path = values.get("images_path", "")
+    dest_path = values.get("dest_path", "")
+    dest_domain = values.get("dest_domain", "")
+    image_resize_x = values.get("image_resize_x", "")
+    dest_path = values.get("dest_path", "")
+    image_resize_y = values.get("image_resize_y", "")
+
+    process_list = [
+        "python",
+        "-u",
+        "agro_cycle_gan/generate.py",
+        images_path,
+        dest_path,
+        "--generator_name",
+        generator,
+        "--image_resize",
+        image_resize_x,
+        image_resize_y,
+        "--dest_domain",
+        dest_domain,
+    ]
+
+    print(generator)
+
+    threading.Thread(target=run_subprocess, args=(process_list,)).start()
 
 
 @app.route("/generate", methods=["GET", "POST"])

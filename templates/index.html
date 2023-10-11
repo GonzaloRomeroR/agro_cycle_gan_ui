@@ -29,7 +29,7 @@
     <div class="tab-pane fade show active" id="generate" role="tabpanel" aria-labelledby="pills-wellnes-tab">
         <h2>Generate</h2>
 
-        <form action="/generate" method="POST">
+        <form id="myForm">
 
             <div class="grid-container">
                 <label for="dataset-generate" class="grid-item">Generator name:</label>
@@ -58,9 +58,12 @@
                 <label for="GET-name" class="grid-item"> Image resize Y:</label>
                 <input type="text" class="grid-item" id="GET-name" name="image_resize_y" value="64">
 
-                <input type="submit" value="Generate">
+                <button type="button" id="runProcessBtn">Generate</button>
+
             </div>
         </form>
+
+        <div id="outputContainer"></div>
 
         <br />
         <br />
@@ -97,6 +100,35 @@
                 </a>
             </div>
         </div>
+
+
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+        <script>
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+            socket.on('output', function (data) {
+                var outputContainer = document.getElementById('outputContainer');
+                outputContainer.innerHTML += '<p>' + data.data + '</p>';
+            });
+
+            document.getElementById('runProcessBtn').addEventListener('click', function () {
+                var form = document.getElementById('myForm');
+                var formData = new FormData(form);
+
+
+                // Convert FormData to a plain JavaScript object
+                var formDataObject = {};
+                formData.forEach(function (value, key) {
+                    formDataObject[key] = value;
+                });
+
+                socket.emit('run_process', { data: formDataObject });
+            });
+        </script>
+
+
         <br />
     </div>
     <div class="tab-pane fade" id="train" role="tabpanel" aria-labelledby="train-tab">
