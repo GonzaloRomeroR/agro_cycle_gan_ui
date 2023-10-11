@@ -3974,6 +3974,18 @@ input[type="button"].btn-block {
     bottom: auto;
 }
 
+
+div.scroll {
+    margin: 4px, 4px;
+    padding: 4px;
+    width: 800px;
+    height: 200px;
+    border: 1px solid black;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: justify;
+}
+
 .dropdown-divider {
     height: 0;
     margin: 0.5rem 0;

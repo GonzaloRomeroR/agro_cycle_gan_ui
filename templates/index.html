@@ -8,6 +8,9 @@
 {% block body %}
 
 
+
+
+
 <h1>Agro cycle gan</h1>
 <hr />
 <br />
@@ -28,8 +31,9 @@
 <div class="tab-content">
     <div class="tab-pane fade show active" id="generate" role="tabpanel" aria-labelledby="pills-wellnes-tab">
         <h2>Generate</h2>
+        <br />
 
-        <form id="myForm">
+        <form id="generationForm">
 
             <div class="grid-container">
                 <label for="dataset-generate" class="grid-item">Generator name:</label>
@@ -58,12 +62,15 @@
                 <label for="GET-name" class="grid-item"> Image resize Y:</label>
                 <input type="text" class="grid-item" id="GET-name" name="image_resize_y" value="64">
 
+
                 <button type="button" id="runProcessBtn">Generate</button>
 
             </div>
         </form>
 
-        <div id="outputContainer"></div>
+        <br />
+
+        <div id="generationContainer" class="scroll"></div>
 
         <br />
         <br />
@@ -101,20 +108,17 @@
             </div>
         </div>
 
-
-
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
         <script>
             var socket = io.connect('http://' + document.domain + ':' + location.port);
 
             socket.on('output', function (data) {
-                var outputContainer = document.getElementById('outputContainer');
-                outputContainer.innerHTML += '<p>' + data.data + '</p>';
+                var generationContainer = document.getElementById('generationContainer');
+                generationContainer.innerHTML += '<p>' + data.data + '</p>';
             });
 
             document.getElementById('runProcessBtn').addEventListener('click', function () {
-                var form = document.getElementById('myForm');
+                var form = document.getElementById('generationForm');
                 var formData = new FormData(form);
 
 
@@ -124,10 +128,9 @@
                     formDataObject[key] = value;
                 });
 
-                socket.emit('run_process', { data: formDataObject });
+                socket.emit('run_generation', { data: formDataObject });
             });
         </script>
-
 
         <br />
     </div>

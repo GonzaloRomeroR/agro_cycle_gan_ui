@@ -145,8 +145,8 @@ def run_subprocess(process_list):
         process.wait()
 
 
-@socketio.on("run_process")
-def handle_run_process(data):
+@socketio.on("run_generation")
+def handle_run_generation(data):
 
     values = data["data"]
     generator = data["data"].get("generator", "")
@@ -175,50 +175,3 @@ def handle_run_process(data):
     print(generator)
 
     threading.Thread(target=run_subprocess, args=(process_list,)).start()
-
-
-@app.route("/generate", methods=["GET", "POST"])
-def generate():
-    generator = request.form["generator"]
-    images_path = request.form["images_path"]
-    dest_path = request.form["dest_path"]
-    dest_domain = request.form["dest_domain"]
-    image_resize_x = request.form["image_resize_x"]
-    dest_path = request.form["dest_path"]
-    image_resize_y = request.form["image_resize_y"]
-
-    # Clear image folders
-    if images_path != ORIG_PATH:
-        clear_image_folders(ORIG_PATH)
-    clear_image_folders(GEN_PATH)
-
-    # Copy files
-    copy_image_folder(images_path, ORIG_PATH)
-
-    def inner():
-        process_list = [
-            "python",
-            "-u",
-            "agro_cycle_gan/generate.py",
-            images_path,
-            dest_path,
-            "--generator_name",
-            generator,
-            "--image_resize",
-            image_resize_x,
-            image_resize_y,
-            "--dest_domain",
-            dest_domain,
-        ]
-
-        proc = subprocess.Popen(
-            process_list,
-            stdout=subprocess.PIPE,
-        )
-
-        for line in iter(proc.stdout.readline, ""):
-            yield line.rstrip().decode("utf-8") + "<br/>\n"
-
-    return Response(
-        inner(), mimetype="text/html"
-    )  # text/html is required for most browsers to show
