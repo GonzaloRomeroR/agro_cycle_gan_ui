@@ -63,7 +63,7 @@
                 <input type="text" class="grid-item" id="GET-name" name="image_resize_y" value="64">
 
 
-                <button type="button" id="runProcessBtn">Generate</button>
+                <button type="button" id="runGenerateBtn">Generate</button>
 
             </div>
         </form>
@@ -112,12 +112,12 @@
         <script>
             var socket = io.connect('http://' + document.domain + ':' + location.port);
 
-            socket.on('output', function (data) {
+            socket.on('output_generation', function (data) {
                 var generationContainer = document.getElementById('generationContainer');
                 generationContainer.innerHTML += '<p>' + data.data + '</p>';
             });
 
-            document.getElementById('runProcessBtn').addEventListener('click', function () {
+            document.getElementById('runGenerateBtn').addEventListener('click', function () {
                 var form = document.getElementById('generationForm');
                 var formData = new FormData(form);
 
@@ -136,7 +136,7 @@
     </div>
     <div class="tab-pane fade" id="train" role="tabpanel" aria-labelledby="train-tab">
         <h2>Train</h2>
-        <form action="/train" method="POST">
+        <form id="trainingForm">
 
             <div class="grid-container">
                 <label for="dataset" class="grid-item">Dataset:</label>
@@ -199,10 +199,40 @@
                 <label for="GET-name" class="grid-item">Comments:</label>
                 <input id="GET-name" class="grid-item" type="text" name="comments" value="">
 
-                <input type="submit" value="Train">
+
+                <button type="button" id="runTrainBtn">Train</button>
             </div>
         </form>
         <br />
+        <br />
+
+        <div id="trainingContainer" class="scroll"></div>
+
+        <br />
+        <br />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+        <script>
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+            socket.on('output_training', function (data) {
+                var generationContainer = document.getElementById('trainingContainer');
+                generationContainer.innerHTML += '<p>' + data.data + '</p>';
+            });
+
+            document.getElementById('runTrainBtn').addEventListener('click', function () {
+                var form = document.getElementById('trainingForm');
+                var formData = new FormData(form);
+
+
+                // Convert FormData to a plain JavaScript object
+                var formDataObject = {};
+                formData.forEach(function (value, key) {
+                    formDataObject[key] = value;
+                });
+
+                socket.emit('run_training', { data: formDataObject });
+            });
+        </script>
     </div>
 </div>
 

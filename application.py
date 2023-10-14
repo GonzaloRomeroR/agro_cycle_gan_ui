@@ -47,23 +47,23 @@ def application():
     return render_template("index.html", generated_images=get_generated_images())
 
 
-def get_process_command(request):
-    dataset = request.form["dataset"]
-    epochs = request.form["epochs"]
-    resize_width = request.form["resize_width"]
-    resize_height = request.form["resize_height"]
-    batch_size = request.form["batch_size"]
-    generator = request.form["generator"]
-    discriminator = request.form["discriminator"]
-    tensorboard = request.form.get("tensorboard")
-    store_models = request.form.get("store_models")
-    metrics = request.form.get("metrics")
-    load_models = request.form.get("load_models")
-    download_datasets = request.form.get("download_datasets")
-    comments = request.form["comments"]
-    db_connection_str = request.form["db_connection_str"]
-    crop_width = request.form["crop_width"]
-    crop_height = request.form["crop_height"]
+def get_process_command(values):
+    dataset = values.get("dataset", "")
+    epochs = values.get("epochs", "")
+    resize_width = values.get("resize_width", "")
+    resize_height = values.get("resize_height", "")
+    batch_size = values.get("batch_size", "")
+    generator = values.get("generator", "")
+    discriminator = values.get("discriminator", "")
+    tensorboard = values.get("tensorboard", "")
+    store_models = values.get("store_models", "")
+    metrics = values.get("metrics", "")
+    load_models = values.get("load_models", "")
+    download_datasets = values.get("download_datasets", "")
+    comments = values.get("comments", "")
+    db_connection_str = values.get("db_connection_str", "")
+    crop_width = values.get("crop_width", "")
+    crop_height = values.get("crop_height", "")
 
     process_list = [
         "python",
@@ -138,10 +138,10 @@ def copy_image_folder(src, dest):
             shutil.copyfile(f"{src}/{file}", f"{dest}/{file}")
 
 
-def run_subprocess(process_list):
+def run_subprocess(process_list, output):
     with subprocess.Popen(process_list, stdout=subprocess.PIPE, text=True) as process:
         for line in process.stdout:
-            socketio.emit("output", {"data": line})
+            socketio.emit(output, {"data": line})
         process.wait()
 
 
@@ -172,6 +172,16 @@ def handle_run_generation(data):
         dest_domain,
     ]
 
-    print(generator)
+    threading.Thread(
+        target=run_subprocess, args=(process_list, "output_generation")
+    ).start()
 
-    threading.Thread(target=run_subprocess, args=(process_list,)).start()
+
+@socketio.on("run_training")
+def handle_run_training(data):
+
+    values = data["data"]
+    process_list = get_process_command(values)
+    threading.Thread(
+        target=run_subprocess, args=(process_list, "output_training")
+    ).start()
