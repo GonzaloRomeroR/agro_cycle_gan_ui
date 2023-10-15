@@ -1,0 +1,106 @@
+<div>
+    <h2>Generate</h2>
+    <br />
+
+    <form id="generationForm">
+
+        <div class="grid-container">
+            <label for="dataset-generate" class="grid-item">Generator name:</label>
+            <select name="generator" class="grid-item" id="dataset-generate">
+                <option value="horse2zebra">horse2zebra</option>
+                <option value="soy_small2soy_big">soy_small2soy_big</option>
+                <option value="soy2corn">soy2corn</option>
+                <option value="over_corn2over_wheat">over_corn2over_wheat</option>
+            </select>
+
+            <label for="image_path" class="grid-item"> Image path:</label>
+            <input type="text" class="grid-item" id="image_path" name="images_path" value="./images_transform">
+
+            <label for="destination_path" class="grid-item"> Destination path:</label>
+            <input type="text" class="grid-item" id="destination_path" name="dest_path" value="./static/generated">
+
+            <label for="destination_domain" class="grid-item"> Destination domain:</label>
+            <select name="dest_domain" class="grid-item" id="destination_domain">
+                <option value="A">A</option>
+                <option value="B">B</option>
+            </select>
+
+            <label for="image_resize_x" class="grid-item"> Image resize X:</label>
+            <input type="text" class="grid-item" id="image_resize_x" name="image_resize_x" value="64">
+
+            <label for="image_resize_y" class="grid-item"> Image resize Y:</label>
+            <input type="text" class="grid-item" id="image_resize_y" name="image_resize_y" value="64">
+
+
+            <button type="button" id="runGenerateBtn">Generate</button>
+
+        </div>
+    </form>
+
+    <br />
+
+    <div id="generationContainer" class="scroll"></div>
+
+    <br />
+    <br />
+
+    <form method="POST" action="/">
+        <input type="submit" value="Update images" name="update_carousel" />
+    </form>
+
+    <div class="container">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+
+                {% for item in generated_images%}
+
+                <div class="{{'carousel-item active' if item.num == 0 else 'carousel-item'}}">
+                    <div class="grid-container-carousel">
+                        <img class="d-block w-100" src="{{url_for('static', filename='original/' + item.original)}}"
+                            alt="First slide">
+                        <img class="d-block w-100" src="{{url_for('static', filename='generated/' + item.generated)}}"
+                            alt="First slide">
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('output_generation', function (data) {
+            var generationContainer = document.getElementById('generationContainer');
+            generationContainer.innerHTML += '<p>' + data.data + '</p>';
+        });
+
+        document.getElementById('runGenerateBtn').addEventListener('click', function () {
+            var form = document.getElementById('generationForm');
+            var formData = new FormData(form);
+
+
+            // Convert FormData to a plain JavaScript object
+            var formDataObject = {};
+            formData.forEach(function (value, key) {
+                formDataObject[key] = value;
+            });
+
+            socket.emit('run_generation', { data: formDataObject });
+        });
+    </script>
+
+    <br />
+    {% block generate %}{% endblock %}
+</div>

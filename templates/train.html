@@ -1,0 +1,100 @@
+<div>
+    <h2>Train</h2>
+    <form id="trainingForm">
+
+        <div class="grid-container">
+            <label for="dataset" class="grid-item">Dataset:</label>
+            <select name="dataset" class="grid-item" id="dataset">
+                <option value="horse2zebra">horse2zebra</option>
+                <option value="soy_small2soy_big">soy_small2soy_big</option>
+                <option value="soy2corn">soy2corn</option>
+                <option value="over_corn2over_wheat">over_corn2over_wheat</option>
+            </select>
+
+            <label for="epochs" class="grid-item">Epochs:</label>
+            <input id="epochs" class="grid-item" type="text" name="epochs" value="10">
+
+            <label for="batch_size" class="grid-item">Batch size:</label>
+            <input id="batch_size" class="grid-item" type="text" name="batch_size" value="5">
+
+            <label for="discriminator" class="grid-item">Custom discriminator:</label>
+            <select name="discriminator" class="grid-item" id="discriminator">
+                <option value="cyclegan">Cycle GAN</option>
+                <option value="mixer">Mixer</option>
+                <option value="resnet">Resnet</option>
+            </select>
+
+            <label for="generator" class="grid-item">Custom generator:</label>
+            <select name="generator" class="grid-item" id="generator">
+                <option value="basic">Basic</option>
+                <option value="nlayer">NLayer</option>
+            </select>
+
+            <label for="resize_width" class="grid-item">Image width resize:</label>
+            <input id="resize_width" class="grid-item" type="text" name="resize_width" value="64">
+
+            <label for="resize_height" class="grid-item">Image height resize:</label>
+            <input id="resize_height" type="text" name="resize_height" value="64">
+
+            <label for="tensorboard" class="grid-item"> Enable tensorboard:</label>
+            <input type="checkbox" class="grid-item" id="tensorboard" name="tensorboard">
+
+            <label for="load_models" class="grid-item"> Load models:</label>
+            <input type="checkbox" id="load_models" name="load_models">
+
+            <label for="store_models" class="grid-item"> Store models:</label>
+            <input type="checkbox" id="store_models" class="grid-item" name="store_models">
+
+            <label for="metrics" class="grid-item"> Calculate metrics:</label>
+            <input type="checkbox" class="grid-item" id="metrics" name="metrics">
+
+            <label for="download_dataset" class="grid-item"> Download datasets:</label>
+            <input type="checkbox" class="grid-item" id="download_dataset" name="download_dataset">
+
+            <label for="crop_width" class="grid-item">Image crop width:</label>
+            <input id="crop_width" class="grid-item" type="text" name="crop_width" value="">
+
+            <label for="crop_height" class="grid-item">Image crop height:</label>
+            <input id="crop_height" type="text" name="crop_height" value="">
+
+
+            <label for="db_connection_str" class="grid-item">DB connection string:</label>
+            <input id="db_connection_str" class="grid-item" type="text" name="db_connection_str" value="">
+            <label for="comments" class="grid-item">Comments:</label>
+            <input id="comments" class="grid-item" type="text" name="comments" value="">
+
+
+            <button type="button" id="runTrainBtn">Train</button>
+        </div>
+    </form>
+    <br />
+    <br />
+
+    <div id="trainingContainer" class="scroll"></div>
+
+    <br />
+    <br />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('output_training', function (data) {
+            var generationContainer = document.getElementById('trainingContainer');
+            generationContainer.innerHTML += '<p>' + data.data + '</p>';
+        });
+
+        document.getElementById('runTrainBtn').addEventListener('click', function () {
+            var form = document.getElementById('trainingForm');
+            var formData = new FormData(form);
+
+
+            // Convert FormData to a plain JavaScript object
+            var formDataObject = {};
+            formData.forEach(function (value, key) {
+                formDataObject[key] = value;
+            });
+
+            socket.emit('run_training', { data: formDataObject });
+        });
+    </script>
+</div>
