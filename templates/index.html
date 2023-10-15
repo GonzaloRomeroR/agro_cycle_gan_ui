@@ -37,30 +37,30 @@
 
             <div class="grid-container">
                 <label for="dataset-generate" class="grid-item">Generator name:</label>
-                <select name="generator" class="grid-item" id="dataset">
+                <select name="generator" class="grid-item" id="dataset-generate">
                     <option value="horse2zebra">horse2zebra</option>
                     <option value="soy_small2soy_big">soy_small2soy_big</option>
                     <option value="soy2corn">soy2corn</option>
                     <option value="over_corn2over_wheat">over_corn2over_wheat</option>
                 </select>
 
-                <label for="GET-name" class="grid-item"> Image path:</label>
-                <input type="text" class="grid-item" id="GET-name" name="images_path" value="./images_transform">
+                <label for="image_path" class="grid-item"> Image path:</label>
+                <input type="text" class="grid-item" id="image_path" name="images_path" value="./images_transform">
 
-                <label for="GET-name" class="grid-item"> Destination path:</label>
-                <input type="text" class="grid-item" id="GET-name" name="dest_path" value="./static/generated">
+                <label for="destination_path" class="grid-item"> Destination path:</label>
+                <input type="text" class="grid-item" id="destination_path" name="dest_path" value="./static/generated">
 
-                <label for="GET-name" class="grid-item"> Destination domain:</label>
-                <select name="dest_domain" class="grid-item" id="dataset">
+                <label for="destination_domain" class="grid-item"> Destination domain:</label>
+                <select name="dest_domain" class="grid-item" id="destination_domain">
                     <option value="A">A</option>
                     <option value="B">B</option>
                 </select>
 
-                <label for="GET-name" class="grid-item"> Image resize X:</label>
-                <input type="text" class="grid-item" id="GET-name" name="image_resize_x" value="64">
+                <label for="image_resize_x" class="grid-item"> Image resize X:</label>
+                <input type="text" class="grid-item" id="image_resize_x" name="image_resize_x" value="64">
 
-                <label for="GET-name" class="grid-item"> Image resize Y:</label>
-                <input type="text" class="grid-item" id="GET-name" name="image_resize_y" value="64">
+                <label for="image_resize_y" class="grid-item"> Image resize Y:</label>
+                <input type="text" class="grid-item" id="image_resize_y" name="image_resize_y" value="64">
 
 
                 <button type="button" id="runGenerateBtn">Generate</button>
@@ -147,57 +147,57 @@
                     <option value="over_corn2over_wheat">over_corn2over_wheat</option>
                 </select>
 
-                <label for="GET-name" class="grid-item">Epochs:</label>
-                <input id="GET-name" class="grid-item" type="text" name="epochs" value="10">
+                <label for="epochs" class="grid-item">Epochs:</label>
+                <input id="epochs" class="grid-item" type="text" name="epochs" value="10">
 
-                <label for="GET-name" class="grid-item">Batch size:</label>
-                <input id="GET-name" class="grid-item" type="text" name="batch_size" value="5">
+                <label for="batch_size" class="grid-item">Batch size:</label>
+                <input id="batch_size" class="grid-item" type="text" name="batch_size" value="5">
 
-                <label for="GET-name" class="grid-item">Custom discriminator:</label>
-                <select name="discriminator" class="grid-item" id="dataset">
+                <label for="discriminator" class="grid-item">Custom discriminator:</label>
+                <select name="discriminator" class="grid-item" id="discriminator">
                     <option value="cyclegan">Cycle GAN</option>
                     <option value="mixer">Mixer</option>
                     <option value="resnet">Resnet</option>
                 </select>
 
-                <label for="GET-name" class="grid-item">Custom generator:</label>
-                <select name="generator" class="grid-item" id="dataset">
+                <label for="generator" class="grid-item">Custom generator:</label>
+                <select name="generator" class="grid-item" id="generator">
                     <option value="basic">Basic</option>
                     <option value="nlayer">NLayer</option>
                 </select>
 
-                <label for="GET-name" class="grid-item">Image width resize:</label>
-                <input id="GET-name" class="grid-item" type="text" name="resize_width" value="64">
+                <label for="resize_width" class="grid-item">Image width resize:</label>
+                <input id="resize_width" class="grid-item" type="text" name="resize_width" value="64">
 
-                <label for="GET-name" class="grid-item">Image height resize:</label>
-                <input id="GET-name" type="text" name="resize_height" value="64">
+                <label for="resize_height" class="grid-item">Image height resize:</label>
+                <input id="resize_height" type="text" name="resize_height" value="64">
 
-                <label for="GET-name" class="grid-item"> Enable tensorboard:</label>
-                <input type="checkbox" class="grid-item" id="GET-name" name="tensorboard">
+                <label for="tensorboard" class="grid-item"> Enable tensorboard:</label>
+                <input type="checkbox" class="grid-item" id="tensorboard" name="tensorboard">
 
-                <label for="GET-name" class="grid-item"> Load models:</label>
-                <input type="checkbox" id="GET-name" name="load_models">
+                <label for="load_models" class="grid-item"> Load models:</label>
+                <input type="checkbox" id="load_models" name="load_models">
 
-                <label for="GET-name" class="grid-item"> Store models:</label>
-                <input type="checkbox" id="GET-name" class="grid-item" name="store_models">
+                <label for="store_models" class="grid-item"> Store models:</label>
+                <input type="checkbox" id="store_models" class="grid-item" name="store_models">
 
-                <label for="GET-name" class="grid-item"> Calculate metrics:</label>
-                <input type="checkbox" class="grid-item" id="GET-name" name="metrics">
+                <label for="metrics" class="grid-item"> Calculate metrics:</label>
+                <input type="checkbox" class="grid-item" id="metrics" name="metrics">
 
-                <label for="GET-name" class="grid-item"> Download datasets:</label>
-                <input type="checkbox" class="grid-item" id="GET-name" name="download_dataset">
+                <label for="download_dataset" class="grid-item"> Download datasets:</label>
+                <input type="checkbox" class="grid-item" id="download_dataset" name="download_dataset">
 
-                <label for="GET-name" class="grid-item">Image crop width:</label>
-                <input id="GET-name" class="grid-item" type="text" name="crop_width" value="">
+                <label for="crop_width" class="grid-item">Image crop width:</label>
+                <input id="crop_width" class="grid-item" type="text" name="crop_width" value="">
 
-                <label for="GET-name" class="grid-item">Image crop height:</label>
-                <input id="GET-name" type="text" name="crop_height" value="">
+                <label for="crop_height" class="grid-item">Image crop height:</label>
+                <input id="crop_height" type="text" name="crop_height" value="">
 
 
-                <label for="GET-name" class="grid-item">DB connection string:</label>
-                <input id="GET-name" class="grid-item" type="text" name="db_connection_str" value="">
-                <label for="GET-name" class="grid-item">Comments:</label>
-                <input id="GET-name" class="grid-item" type="text" name="comments" value="">
+                <label for="db_connection_str" class="grid-item">DB connection string:</label>
+                <input id="db_connection_str" class="grid-item" type="text" name="db_connection_str" value="">
+                <label for="comments" class="grid-item">Comments:</label>
+                <input id="comments" class="grid-item" type="text" name="comments" value="">
 
 
                 <button type="button" id="runTrainBtn">Train</button>
