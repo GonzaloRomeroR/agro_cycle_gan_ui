@@ -153,6 +153,7 @@ blockquote {
 .grid-container {
     display: grid;
     grid-template-columns: 12em 10em;
+    grid-row-gap: 7px;
 }
 
 .grid-container-carousel {
