@@ -7,10 +7,9 @@
         <div class="grid-container">
             <label for="dataset-generate" class="grid-item">Generator name:</label>
             <select name="generator" class="grid-item" id="dataset-generate">
-                <option value="horse2zebra">horse2zebra</option>
                 <option value="soy_small2soy_big">soy_small2soy_big</option>
+                <option value="day2night">day2night</option>
                 <option value="soy2corn">soy2corn</option>
-                <option value="over_corn2over_wheat">over_corn2over_wheat</option>
             </select>
 
             <label for="image_path" class="grid-item"> Image path:</label>
@@ -21,15 +20,15 @@
 
             <label for="destination_domain" class="grid-item"> Destination domain:</label>
             <select name="dest_domain" class="grid-item" id="destination_domain">
-                <option value="A">A</option>
                 <option value="B">B</option>
+                <option value="A">A</option>
             </select>
 
             <label for="image_resize_x" class="grid-item"> Image resize X:</label>
-            <input type="text" class="grid-item" id="image_resize_x" name="image_resize_x" value="64">
+            <input type="text" class="grid-item" id="image_resize_x" name="image_resize_x" value="512">
 
             <label for="image_resize_y" class="grid-item"> Image resize Y:</label>
-            <input type="text" class="grid-item" id="image_resize_y" name="image_resize_y" value="64">
+            <input type="text" class="grid-item" id="image_resize_y" name="image_resize_y" value="512">
 
 
             <button type="button" id="runGenerateBtn">Generate</button>
@@ -77,8 +76,6 @@
             </a>
         </div>
     </div>
-
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script>

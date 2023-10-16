@@ -5,10 +5,9 @@
         <div class="grid-container">
             <label for="dataset" class="grid-item">Dataset:</label>
             <select name="dataset" class="grid-item" id="dataset">
-                <option value="horse2zebra">horse2zebra</option>
                 <option value="soy_small2soy_big">soy_small2soy_big</option>
+                <option value="day2night">day2night</option>
                 <option value="soy2corn">soy2corn</option>
-                <option value="over_corn2over_wheat">over_corn2over_wheat</option>
             </select>
 
             <label for="epochs" class="grid-item">Epochs:</label>
@@ -31,10 +30,10 @@
             </select>
 
             <label for="resize_width" class="grid-item">Image width resize:</label>
-            <input id="resize_width" class="grid-item" type="text" name="resize_width" value="64">
+            <input id="resize_width" class="grid-item" type="text" name="resize_width" value="512">
 
             <label for="resize_height" class="grid-item">Image height resize:</label>
-            <input id="resize_height" type="text" name="resize_height" value="64">
+            <input id="resize_height" type="text" name="resize_height" value="512">
 
             <label for="tensorboard" class="grid-item"> Enable tensorboard:</label>
             <input type="checkbox" class="grid-item" id="tensorboard" name="tensorboard">
