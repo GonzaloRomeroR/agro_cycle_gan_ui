@@ -44,13 +44,14 @@
     <br />
     <br />
 
-    <form method="POST" action="/">
-        <input type="submit" value="Update images" name="update_carousel" />
-    </form>
+    <button name="update_carousel" type="button">Update images</button>
+
+    <br />
+    <br />
 
     <div class="container">
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
+            <div class="carousel-inner" id="carousel-inner">
 
                 {% for item in generated_images%}
 
@@ -76,6 +77,8 @@
             </a>
         </div>
     </div>
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script>
