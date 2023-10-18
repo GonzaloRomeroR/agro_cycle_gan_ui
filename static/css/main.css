@@ -153,6 +153,7 @@ blockquote {
 .grid-container {
     display: grid;
     grid-template-columns: 12em 10em;
+    grid-row-gap: 7px;
 }
 
 .grid-container-carousel {
@@ -3972,6 +3973,18 @@ input[type="button"].btn-block {
 .dropdown-menu[x-placement^="left"] {
     right: auto;
     bottom: auto;
+}
+
+
+div.scroll {
+    margin: 4px, 4px;
+    padding: 4px;
+    width: 800px;
+    height: 200px;
+    border: 1px solid black;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: justify;
 }
 
 .dropdown-divider {
